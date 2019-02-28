@@ -86,7 +86,7 @@ class HomeTableViewController: UITableViewController {
         cell.userNameLabel.text = user["name"] as? String
         cell.tweetContent.text = tweetArray[indexPath.row]["text"] as? String
         
-        //cell.timeLabel.text = getRelativeTime(timeString: (tweetArray[indexPath.row]["created_at"] as? String)!)
+        cell.timeLabel.text = getRelativeTime(timeString: (tweetArray[indexPath.row]["created_at"] as? String)!)
         
         let imageUrl = URL(string: (user["profile_image_url_https"] as? String)!)
         let data = try? Data(contentsOf: imageUrl!)
@@ -119,7 +119,7 @@ class HomeTableViewController: UITableViewController {
         return tweetArray.count
     }
     
-    /* func getRelativeTime(timeString: String) -> String {
+     func getRelativeTime(timeString: String) -> String {
         let time: Date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
@@ -136,15 +136,19 @@ class HomeTableViewController: UITableViewController {
         let day = 24 * hour
         let week = 7 * day
         if secondsAgo < minute {
-        return String(secondsAgo)
-    }
-
-        return String(timeString)
-
+            return "\(secondsAgo) seconds ago"
+        }
+        else if secondsAgo < hour {
+            return "\(secondsAgo / minute) minutes ago"
+            
+        }else if secondsAgo < day {
+            return "\(secondsAgo / hour) days ago"
+            
+        } else if secondsAgo < week {
+            return "\(secondsAgo / day) days ago"
+        }
+        
+        return "\(secondsAgo / week) weeks ago"
 }
- 
- */
-
-   
 
 }
