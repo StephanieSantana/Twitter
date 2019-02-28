@@ -119,7 +119,7 @@ class HomeTableViewController: UITableViewController {
         return tweetArray.count
     }
     
-  /*  func getRelativeTime(timeString: String) -> String {
+    /* func getRelativeTime(timeString: String) -> String {
         let time: Date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
@@ -136,14 +136,15 @@ class HomeTableViewController: UITableViewController {
         let day = 24 * hour
         let week = 7 * day
         if secondsAgo < minute {
-            print("\(secondsAgo) seconds ago")
+        return String(secondsAgo)
     }
 
-        return String(hour); " ago"
+        return String(timeString)
 
 }
+ 
+ */
 
-        */
    
 
 }
