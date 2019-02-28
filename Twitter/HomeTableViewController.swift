@@ -17,12 +17,19 @@ class HomeTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadTweets()
         
         myRefreshControl.addTarget(self, action: #selector(loadTweets), for: .valueChanged)
         tableView.refreshControl = myRefreshControl
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 150
 
        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loadTweets()
+
     }
     
     @objc func loadTweets() {
@@ -79,6 +86,8 @@ class HomeTableViewController: UITableViewController {
         cell.userNameLabel.text = user["name"] as? String
         cell.tweetContent.text = tweetArray[indexPath.row]["text"] as? String
         
+        //cell.timeLabel.text = getRelativeTime(timeString: (tweetArray[indexPath.row]["created_at"] as? String)!)
+        
         let imageUrl = URL(string: (user["profile_image_url_https"] as? String)!)
         let data = try? Data(contentsOf: imageUrl!)
         
@@ -86,7 +95,10 @@ class HomeTableViewController: UITableViewController {
             cell.profileImageView.image = UIImage(data: imageData)
         }
         
-        
+      cell.setFavorite(tweetArray[indexPath.row]["favorited"] as! Bool)
+      cell.tweetId = tweetArray[indexPath.row]["id"] as! Int
+      cell.retweeted = tweetArray[indexPath.row]["retweeted"] as! Bool
+      cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as! Bool)
         return cell
         
     }
@@ -101,11 +113,37 @@ class HomeTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return tweetArray.count
     }
+    
+  /*  func getRelativeTime(timeString: String) -> String {
+        let time: Date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
+        time = dateFormatter.date(from: timeString)!
+        return time.timeAgoDisplay()
+    }
+}
 
+    extension Date {
+    func timeAgoDisplay() -> String {
+        let secondsAgo = Int(Date().timeIntervalSince(self))
+        let minute = 60
+        let hour = 60 * minute
+        let day = 24 * hour
+        let week = 7 * day
+        if secondsAgo < minute {
+            print("\(secondsAgo) seconds ago")
+    }
+
+        return String(hour); " ago"
+
+}
+
+        */
    
+
 }
